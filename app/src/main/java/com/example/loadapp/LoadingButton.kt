@@ -16,10 +16,11 @@ class LoadingButton @JvmOverloads constructor(
     private var heightSize = 0
     private val valueAnimator = ValueAnimator.ofInt(0, 360).setDuration(3000)
     private var radius = 0.0f
-    private var loadingrange=0
+    private var loadingrange = 0
     private val oldBGColor = ResourcesCompat.getColor(resources, R.color.colorPrimaryDark, null)
     private val newBGColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
     private val textColor = ResourcesCompat.getColor(resources, R.color.white, null)
+    private val circleColor = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
     private var buttonText: String = resources.getString(R.string.button_loading)
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -28,7 +29,7 @@ class LoadingButton @JvmOverloads constructor(
         typeface = Typeface.create("Downloading", Typeface.BOLD)
         color = textColor
     }
-     var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { property, oldValue, newValue ->
+    var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { property, oldValue, newValue ->
         when (newValue) {
             ButtonState.Loading -> {
                 valueAnimator.start()
@@ -36,44 +37,46 @@ class LoadingButton @JvmOverloads constructor(
             }
             ButtonState.Completed -> {
                 valueAnimator.cancel()
-                buttonText=resources.getString(R.string. button_completed)
-                loadingrange=0
+                buttonText = resources.getString(R.string.button_completed)
+                loadingrange = 0
             }
             else -> {
                 valueAnimator.cancel()
-                buttonText=context.getString(R.string.button_name)
-                loadingrange=0
+                buttonText = context.getString(R.string.button_name)
+                loadingrange = 0
             }
         }
-         invalidate()
+        invalidate()
     }
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
 
     init {
         isClickable = true
-        buttonState=ButtonState.Completed
+        buttonState = ButtonState.Completed
         buttonText = resources.getString(R.string.button_name)
         valueAnimator.apply {
             addUpdateListener { animator ->
                 loadingrange = animator.animatedValue as Int
                 invalidate()
             }
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.RESTART
         }
     }
 
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        paint.color= oldBGColor
-        canvas?.drawArc(widthSize-100f, 20f,widthSize-100f,140f,loadingrange.toFloat(),0f, true, paint)
-        paint.color=oldBGColor
+        paint.color = oldBGColor
         canvas?.drawRect(0f, 0f, widthSize.toFloat(), heightSize.toFloat(), paint)
-       paint.color=newBGColor
-        canvas?.drawRect(0f, 0f, widthSize * loadingrange/360f, heightSize.toFloat(), paint)
+        paint.color = newBGColor
+        canvas?.drawRect(0f, 0f, widthSize * loadingrange / 360f, heightSize.toFloat(), paint)
         paint.color = textColor
         canvas?.drawText(buttonText, (width / 2).toFloat(), ((height + 30) / 2).toFloat(),
             paint)
+        paint.color = circleColor
+        canvas?.drawArc(widthSize - 150f, 40f, widthSize - 100f, 140f, 0f, loadingrange.toFloat(), true, paint)
     }
 
 
@@ -88,14 +91,5 @@ class LoadingButton @JvmOverloads constructor(
         setMeasuredDimension(wid, height)
     }
 
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        radius = (min(width, height) / 30.0).toFloat()
-        if (::extraBitmap.isInitialized)
-            extraBitmap.recycle()
-        extraBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-        extraCanvas = Canvas(extraBitmap)
-        extraCanvas.drawColor(oldBGColor)
-    }
 
 }

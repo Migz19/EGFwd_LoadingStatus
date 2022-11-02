@@ -1,5 +1,6 @@
 package com.example.loadapp
 
+import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,16 +11,24 @@ import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ContentDetailBinding
+    @SuppressLint("WrongConstant")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ContentDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(toolbar)
-        val state = intent.getBooleanExtra("state",true)
-        val fileName=intent.getStringExtra("name")
+        val sharedPref =getSharedPreferences("mySharedPref", MODE_APPEND)
+        val state = sharedPref.getBoolean("state",true)
+        val fileName=sharedPref.getString("name","")
         binding.stateTv.text = when (state) {
-            true -> "Succeeded"
-            false -> "Failed"
+            true -> {
+                binding.stateTv.setTextColor(getColor(R.color.colorAccent))
+                "Succeeded"
+            }
+            false ->{
+                binding.stateTv.setTextColor(getColor(R.color.colorPrimary))
+                "Failed"
+            }
         }
         binding.fileTv.text=fileName
         binding.button2.setOnClickListener {

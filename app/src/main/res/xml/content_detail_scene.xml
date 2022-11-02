@@ -24,7 +24,8 @@
     <Transition
         app:constraintSetEnd="@id/end"
         app:duration="1000"
-        app:constraintSetStart="@+id/start" >
-        <OnSwipe/>
+        app:constraintSetStart="@+id/start"
+        app:autoTransition="animateToEnd">
+
     </Transition>
 </MotionScene>
