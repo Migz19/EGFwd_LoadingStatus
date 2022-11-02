@@ -21,7 +21,7 @@
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_200sdp"
+        android:layout_height="@dimen/_250sdp"
         android:layout_marginTop="@dimen/_50sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -45,16 +45,15 @@
         <RadioButton
             android:id="@+id/retrofitRB"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_80sdp"
             android:padding="@dimen/_10sdp"
             android:text="@string/retrofit_file"
-
             />
 
         <RadioButton
             android:id="@+id/specialUrlRB"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_50sdp"
             android:text="Add download Url" />
 
 
