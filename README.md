@@ -1,10 +1,11 @@
 # Egfwd Loading Status Task
 
-This project is a simple loading status task developed as part of the EGFWD Scholarship Program in collaboration with Udacity. It serves as a practice exercise to demonstrate the implementation of MotionLayout, simple notifications, and the Download Manager in an Android application.
+This project is a simple loading status task developed as part of the EGFWD Scholarship Program in collaboration with Udacity. It serves as a practice exercise to demonstrate the implementation of MotionLayout, simple notifications, Canvas and Download Manager in an Android application.
 
 ## Features
 
 - Displays a loading animation using MotionLayout
+- Draw progress with animation using Canvas
 - Shows notifications for download progress and completion
 - Utilizes the Download Manager for downloading files
 
@@ -14,6 +15,7 @@ The following libraries and technologies were used in the development of this ap
 
 - MotionLayout: For creating and animating UI transitions
 - Download Manager: For handling file downloads
+- Canvas : For animation and drawing
 
 
 ## Contribution
